@@ -1,0 +1,5 @@
+*.json
+*.pkl
+.venv/
+__pycache__/
+.env
