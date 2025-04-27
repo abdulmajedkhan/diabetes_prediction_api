@@ -4,14 +4,32 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import joblib
 import numpy as np
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize Flask
 app = Flask(__name__)
 CORS(app)  # Enable CORS for Flutter to make requests
 
-# Initialize Firebase
+# Initialize Firebase Admin
 if not firebase_admin._apps:
-    cred = credentials.Certificate("diabetes-7d1a3-firebase-administer-fbsvc-539f6766bb.json")  # replace with your path
+    firebase_credentials = {
+        "type": os.getenv("FIREBASE_TYPE"),
+        "project_id": os.getenv("FIREBASE_PROJECT_ID"),
+        "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
+        "private_key": os.getenv("FIREBASE_PRIVATE_KEY").replace(r'\n', '\n'),  # Fix newline
+        "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
+        "client_id": os.getenv("FIREBASE_CLIENT_ID"),
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": os.getenv("FIREBASE_CLIENT_CERT_URL")
+    }
+
+    cred = credentials.Certificate(firebase_credentials)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()

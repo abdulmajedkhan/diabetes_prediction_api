@@ -1,5 +1,24 @@
+# Ignore JSON files (for Firebase credentials or other sensitive files)
 *.json
+
+# Ignore model files (you can store them in another location or provide a setup to generate them)
 *.pkl
+
+# Ignore virtual environment
 .venv/
+
+# Ignore Python bytecode files
 __pycache__/
+
+# Ignore environment variable files (.env with credentials)
 .env
+
+# Ignore logs (if any)
+*.log
+
+# Ignore IDE configurations (e.g., VSCode)
+.vscode/
+.idea/
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
